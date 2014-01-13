@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.add_dependency "bundler"
-  s.add_dependency "sequel"
+  s.add_dependency "sequel", "4.6.0"
   s.add_dependency "thor"
   s.add_dependency "rake"
   s.add_dependency "httparty", "0.11.0"
