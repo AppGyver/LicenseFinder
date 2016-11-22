@@ -40,8 +40,54 @@ module LicenseFinder
       dependency.hash
     end
 
-    def method_missing(method_name)
-      nil
+    # def method_missing(method_name)
+    #   STDERR.puts "WARNING, METHOD MISSING: #{method_name}"
+    #   if dependency.respond_to? method_name
+    #     dependency.send method_name
+    #   else
+    #     nil
+    #   end
+    # end
+
+    def groups
+      dependency.groups
+    end
+
+    def parents
+      dependency.parents
+    end
+
+    def children
+      dependency.children
+    end
+
+    def approved?
+      if dependency.approved?
+        true
+      else
+        #STDERR.puts "WARNING, unapproved shit: #{self.inspect}\n #{dependency.inspect.to_s[0..50]}"
+        false
+      end
+    end
+
+    def approved_manually?
+      dependency.approved_manually?
+    end
+
+    def whitelisted?
+      dependency.whitelisted?
+    end
+
+    def homepage
+      dependency.homepage
+    end
+
+    def summary
+      dependency.summary
+    end
+
+    def description
+      dependency.description
     end
   end
 end
