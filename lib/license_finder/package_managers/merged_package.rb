@@ -40,14 +40,14 @@ module LicenseFinder
       dependency.hash
     end
 
-    # def method_missing(method_name)
-    #   STDERR.puts "WARNING, METHOD MISSING: #{method_name}"
-    #   if dependency.respond_to? method_name
-    #     dependency.send method_name
-    #   else
-    #     nil
-    #   end
-    # end
+    def method_missing(method_name, *args)
+      # STDERR.puts "WARNING, METHOD MISSING: #{method_name}"
+      if dependency.respond_to? method_name
+        dependency.send method_name, *args
+      else
+        nil
+      end
+    end
 
     def groups
       dependency.groups
@@ -88,6 +88,10 @@ module LicenseFinder
 
     def description
       dependency.description
+    end
+
+    def decide_on_license(licence)
+      dependency.decide_on_license(licence)
     end
   end
 end

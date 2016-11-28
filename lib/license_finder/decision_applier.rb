@@ -40,13 +40,14 @@ module LicenseFinder
     end
 
     def with_approval(package)
-      raise "hell" if package.instance_of? LicenseFinder::MergedPackage
       if package.licenses.all? { |license| decisions.blacklisted?(license) }
         package.blacklisted!
       elsif decisions.approved?(package.name, package.version)
         package.approved_manually!(decisions.approval_of(package.name, package.version))
       elsif package.licenses.any? { |license| decisions.whitelisted?(license) }
         package.whitelisted!
+      else
+        STDERR.puts("PACKAGE WITHOUT DECISION! #{package.inspect}")
       end
       package
     end

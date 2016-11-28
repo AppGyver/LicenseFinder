@@ -69,33 +69,13 @@ module LicenseFinder
 
         if subproject_paths && !subproject_paths.empty?
           finder = LicenseAggregator.new(license_finder_config, subproject_paths)
-          #report = MergedReport.new(finder.dependencies, options)
-
-          raise "shitiit" if license_finder.decisions.whitelisted.empty?
-
-          STDERR.puts "about to get acknowledged from: #{finder.dependencies.length} deps"
-          STDERR.puts "sample: #{finder.dependencies.first.inspect}"
 
           acknowledged = DecisionApplier.new(
             decisions: license_finder.decisions,
             packages: finder.dependencies
           ).acknowledged
 
-          STDERR.puts "got acknowledged: #{acknowledged.length}"
-          STDERR.puts "acknowledged.first.inspect: #{acknowledged.first.inspect}"
-          STDERR.puts "acknowledged.first.approved?: #{acknowledged.first.approved?}"
-          STDERR.puts "acknowledged.first.dependency.whitelisted?: #{acknowledged.first.whitelisted?}"
-          STDERR.puts "acknowledged.first.dependency.inspect: #{acknowledged.first.dependency.inspect}"
-          exit -1
-
           report = report_of acknowledged
-
-#         def apply_decisions(system_packages)
-          # all_packages = decisions.packages + system_packages
-          # all_packages
-          #   .map { |package| with_decided_licenses(package) }
-          #   .map { |package| with_approval(package) }
-          #   .reject { |package| ignored?(package) }
         else
           report = report_of(license_finder.acknowledged)
         end
